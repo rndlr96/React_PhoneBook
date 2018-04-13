@@ -1,6 +1,8 @@
 import React from 'react';
 import ContactInfo from './ContactInfo'
 import ContactDetail from './ContactDetail'
+import ContactCreate from './ContactCreate'
+import update from 'react-addons-update'
 
 export default class Contact extends React.Component {
   constructor(props){
@@ -89,19 +91,21 @@ export default class Contact extends React.Component {
        });
     };
 
-     return (
-         <div>
-             <h1>PhoneBook</h1>
-             <input
-              name = "keyword"
-              placeholder = "Search"
-              value = {this.state.keyword}
-              onChange={this.handleChange}
-             />
-             <div>{mapToComponents(this.state.contactData)}</div>
-             <ContactDetail isSelected = {this.state.selectedKey != -1}
-                            contact = {this.state.contactData[this.state.selectedKey]}/>
-         </div>
+    return (
+        <div>
+          <h1>PhoneBook</h1>
+           <input name = "keyword" placeholder = "Search" value = {this.state.keyword} onChange={this.handleChange}/>
+           <div>{mapToComponents(this.state.contactData)}</div>
+           <ContactDetail isSelected = {this.state.selectedKey != -1} contact = {this.state.contactData[this.state.selectedKey]}/>
+           <ContactCreate
+             onCreate={this.handleCreate}
+           />
+        </div>
      );
  }
+}
+
+
+ContactCreate.defaultProps = {
+  onCreate: () => { console.error('onCreate not defined'); }
 }
